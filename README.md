@@ -132,7 +132,7 @@ Skip this step if you are using the pre-collected data already committed to `dat
 |----------|---------|:---------:|
 | `notebooks/01_data_collection.ipynb` | Re-scrape WSB comments (PRAW) and/or re-fetch SPY bars (yfinance) | Optional |
 | `notebooks/02_main.ipynb` | Full analysis pipeline and backtests | **Yes** |
-| `notebooks/03_algo.ipynb` | Experimental algorithmic trading sandbox | Optional |
+| `notebooks/03_algo.ipynb` | ⚠️ *Non-functional* — experimental IBKR TWS live paper-trading POC (requires TWS + ibapi) | Optional |
 
 > **TL;DR:** Processed data (`full_manual_spy.csv`, `manual_merged_df.csv`, `manual_spy_df.csv`) is already
 > committed to `data/`. You can jump straight to **`notebooks/02_main.ipynb`** without running
