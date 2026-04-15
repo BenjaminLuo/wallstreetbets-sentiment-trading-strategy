@@ -25,40 +25,37 @@ This project investigates whether crowd sentiment on **r/WallStreetBets** contai
 ```
 wallstreetbets-sentiment-trading-strategy/
 │
+├── docs/
+│   ├── Final Presentation.pdf      # Full project write-up & results
+│   └── Midterm Presentation.pdf    # Intermediate progress report
+│
+├── notebooks/
+│   ├── 01_reddit_data.ipynb        # PRAW scraping & comment preprocessing
+│   ├── 02_intraday_spy_data.ipynb  # SPY intraday OHLCV collection
+│   ├── 03_main.ipynb               # End-to-end: merge → analyse → backtest
+│   └── 04_algo.ipynb               # Experimental algorithmic trading sandbox
+│
+├── src/                            # Python source package
+│   ├── __init__.py
+│   ├── processing.py               # NLP pipeline (cleaning, entity extraction,
+│   │                               #   sentiment scoring, visualisation helpers)
+│   └── strategy.py                 # Backtrader strategy classes + runner helpers
+│
 ├── data/
-│   ├── reddit/                   # Raw daily WSB comment CSVs (gitignored – large)
-│   ├── spy/                      # Intraday SPY price CSVs (gitignored – large)
-│   ├── full_manual_spy.csv       # Cleaned, merged SPY data
-│   ├── manual_merged_df.csv      # Merged sentiment + price data
-│   ├── manual_spy_df.csv         # Processed SPY price data
-│   └── manual_wsb_sdf.csv        # Processed WSB sentiment data (gitignored)
+│   ├── full_manual_spy.csv         # Cleaned, merged SPY price data
+│   ├── manual_merged_df.csv        # Merged sentiment + price data
+│   ├── manual_spy_df.csv           # Processed SPY price data
+│   ├── reddit/                     # Raw daily WSB comment CSVs  (gitignored)
+│   └── spy/                        # Raw intraday SPY CSVs       (gitignored)
 │
 ├── results/
-│   ├── bear/                     # Backtest charts – bear market regime
-│   ├── bull/                     # Backtest charts – bull market regime
-│   ├── flat/                     # Backtest charts – flat/sideways regime
-│   └── full/                     # Backtest charts – full period
-│       ├── Baseline: Buy and Hold-backtest.png
-│       ├── Baseline: Dollar Cost Averaging-backtest.png
-│       ├── Baseline: Technical Analysis (EMA, BB, RSI, VWAP)-backtest.png
-│       ├── Strategy 1: Pure Sentiment-backtest.png
-│       ├── Strategy 2: Sentiment + Technical Analysis-backtest.png
-│       └── Strategy 3: Inverse Sentiment (Contrarian)-backtest.png
-│
-├── utils/
-│   ├── _processing.py            # NLP pipeline (cleaning, entity extraction, sentiment scoring)
-│   └── _strategy.py              # Backtrader strategy classes + runner helpers
-│
-├── reddit_data.ipynb             # Data collection: PRAW scraping & preprocessing
-├── intraday_spy_data.ipynb       # Data collection: SPY intraday price fetching
-├── main.ipynb                    # End-to-end: merge, analyse, backtest, visualise
-├── algo.ipynb                    # Experimental algorithmic trading sandbox
-│
-├── Final Presentation.pdf        # Project final report
-├── Midterm Presentation.pdf      # Project midterm report
+│   ├── bear/                       # Backtest charts – bear market regime
+│   ├── bull/                       # Backtest charts – bull market regime
+│   ├── flat/                       # Backtest charts – flat/sideways regime
+│   └── full/                       # Backtest charts – full evaluation period
 │
 ├── requirements.txt
-├── .env.example                  # ← Copy to .env and fill in credentials
+├── .env.example                    # ← Copy to .env and fill in credentials
 └── .gitignore
 ```
 
@@ -133,10 +130,10 @@ Register a Reddit app at https://www.reddit.com/prefs/apps (choose **script** ty
 
 | Notebook | Purpose |
 |----------|---------|
-| `reddit_data.ipynb` | Scrape and preprocess r/WSB comments |
-| `intraday_spy_data.ipynb` | Fetch SPY intraday OHLCV data |
-| `main.ipynb` | Run the full analysis pipeline and backtests |
-| `algo.ipynb` | Experimental trading logic |
+| `notebooks/01_reddit_data.ipynb` | Scrape and preprocess r/WSB comments |
+| `notebooks/02_intraday_spy_data.ipynb` | Fetch SPY intraday OHLCV data |
+| `notebooks/03_main.ipynb` | Run the full analysis pipeline and backtests |
+| `notebooks/04_algo.ipynb` | Experimental algorithmic trading sandbox |
 
 ---
 
@@ -210,13 +207,13 @@ The naming convention is:
 |---|---|
 | ![Flat – S2](results/flat/Strategy%202:%20Sentiment%20+%20Technical%20Analysis-backtest.png) | ![Flat – S3](results/flat/Strategy%203:%20Inverse%20Sentiment%20(Contrarian)-backtest.png) |
 
-> **Generating figures yourself**: run `main.ipynb` end-to-end.  The notebooks call
-> `run_and_plot(..., results_dir='results/full')` and
-> `run_strategy(..., results_dir='results/full')` from `utils/_strategy.py`, and
-> `plot_sentiment(df, ..., save_path='results/sentiment_dist.png')` /
-> `plot_sector_sentiment_trends(df, save_path='results/sector_trends.png')` /
-> `plot_sentiment_vs_price(df, save_path='results/price_vs_sentiment.png')` from
-> `utils/_processing.py`.
+> **Generating figures yourself**: run `notebooks/03_main.ipynb` end-to-end.  The notebooks call
+> `run_and_plot(..., results_dir='../results/full')` and
+> `run_strategy(..., results_dir='../results/full')` from `src/strategy.py`, and
+> `plot_sentiment(df, ..., save_path='../results/sentiment_dist.png')` /
+> `plot_sector_sentiment_trends(df, save_path='../results/sector_trends.png')` /
+> `plot_sentiment_vs_price(df, save_path='../results/price_vs_sentiment.png')` from
+> `src/processing.py`.
 
 ---
 
@@ -233,8 +230,8 @@ See [`requirements.txt`](requirements.txt) for the full list. Key packages:
 
 ## Presentations
 
-- [`Final Presentation.pdf`](Final%20Presentation.pdf) — full project write-up and results
-- [`Midterm Presentation.pdf`](Midterm%20Presentation.pdf) — intermediate progress report
+- [`docs/Final Presentation.pdf`](docs/Final%20Presentation.pdf) — full project write-up and results
+- [`docs/Midterm Presentation.pdf`](docs/Midterm%20Presentation.pdf) — intermediate progress report
 
 ---
 
