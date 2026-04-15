@@ -1,0 +1,27 @@
+# Core data & ML
+pandas>=2.2.0
+numpy>=1.26.0
+matplotlib>=3.8.0
+tqdm>=4.66.0
+
+# NLP & Sentiment
+nltk>=3.8.0
+spacy>=3.7.0
+transformers>=4.40.0
+wordcloud>=1.9.0
+
+# PyTorch – install the version matching your hardware (CUDA / MPS / CPU):
+# https://pytorch.org/get-started/locally/
+torch>=2.0.0
+
+# Backtesting
+backtrader>=1.9.78
+
+# Reddit API
+praw>=7.7.0
+
+# Environment / utilities
+python-dotenv>=1.0.0
+
+# spaCy language model (run once after install):
+# python -m spacy download en_core_web_lg
