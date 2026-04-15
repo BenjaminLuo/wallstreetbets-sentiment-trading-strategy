@@ -30,10 +30,9 @@ wallstreetbets-sentiment-trading-strategy/
 │   └── Midterm Presentation.pdf    # Intermediate progress report
 │
 ├── notebooks/
-│   ├── 01_reddit_data.ipynb        # PRAW scraping & comment preprocessing
-│   ├── 02_intraday_spy_data.ipynb  # SPY intraday OHLCV collection
-│   ├── 03_main.ipynb               # End-to-end: merge → analyse → backtest
-│   └── 04_algo.ipynb               # Experimental algorithmic trading sandbox
+│   ├── 01_data_collection.ipynb    # Reddit scraper (PRAW) + SPY fetcher (yfinance) – optional
+│   ├── 02_main.ipynb               # End-to-end: merge → analyse → backtest
+│   └── 03_algo.ipynb               # Experimental algorithmic trading sandbox
 │
 ├── src/                            # Python source package
 │   ├── __init__.py
@@ -131,14 +130,13 @@ Skip this step if you are using the pre-collected data already committed to `dat
 
 | Notebook | Purpose | Required? |
 |----------|---------|:---------:|
-| `notebooks/01_reddit_data.ipynb` | Re-scrape r/WSB comments via PRAW | Optional |
-| `notebooks/02_intraday_spy_data.ipynb` | Re-fetch SPY intraday OHLCV via yfinance | Optional |
-| `notebooks/03_main.ipynb` | Full analysis pipeline and backtests | **Yes** |
-| `notebooks/04_algo.ipynb` | Experimental algorithmic trading sandbox | Optional |
+| `notebooks/01_data_collection.ipynb` | Re-scrape WSB comments (PRAW) and/or re-fetch SPY bars (yfinance) | Optional |
+| `notebooks/02_main.ipynb` | Full analysis pipeline and backtests | **Yes** |
+| `notebooks/03_algo.ipynb` | Experimental algorithmic trading sandbox | Optional |
 
 > **TL;DR:** Processed data (`full_manual_spy.csv`, `manual_merged_df.csv`, `manual_spy_df.csv`) is already
-> committed to `data/`. You can jump straight to **`notebooks/03_main.ipynb`** without running
-> the data-collection notebooks or configuring any API credentials.
+> committed to `data/`. You can jump straight to **`notebooks/02_main.ipynb`** without running
+> the data-collection notebook or configuring any API credentials.
 
 ---
 
@@ -212,7 +210,7 @@ The naming convention is:
 |---|---|
 | ![Flat – S2](results/flat/Strategy%202:%20Sentiment%20+%20Technical%20Analysis-backtest.png) | ![Flat – S3](results/flat/Strategy%203:%20Inverse%20Sentiment%20(Contrarian)-backtest.png) |
 
-> **Generating figures yourself**: run `notebooks/03_main.ipynb` end-to-end.  The notebooks call
+> **Generating figures yourself**: run `notebooks/02_main.ipynb` end-to-end.  The notebooks call
 > `run_and_plot(..., results_dir='../results/full')` and
 > `run_strategy(..., results_dir='../results/full')` from `src/strategy.py`, and
 > `plot_sentiment(df, ..., save_path='../results/sentiment_dist.png')` /
