@@ -302,8 +302,16 @@ def sentiment_analysis(df):
     return df
 
 
-def show_wordcloud(data, title=""):
-    """Displays a word cloud showing most popular tickers"""
+def show_wordcloud(data, title="", save_path=None):
+    """Displays a word cloud showing most popular tickers.
+
+    Parameters
+    ----------
+    data      : pandas Series of ticker/text strings
+    title     : chart title
+    save_path : optional file path (e.g. 'results/wordcloud.png'); if supplied
+                the figure is saved before being displayed.
+    """
     text = " ".join(t for t in data.dropna())
     stopwords = set(STOPWORDS)
     stopwords.update(["t", "co", "https", "amp", "U", "fuck", "fucking"])
@@ -314,6 +322,8 @@ def show_wordcloud(data, title=""):
     fig.suptitle(title, fontsize=20)
     fig.subplots_adjust(top=2.3)
     plt.imshow(wordcloud, interpolation='bilinear')
+    if save_path:
+        plt.savefig(save_path, bbox_inches='tight', dpi=150)
     plt.show()
 
 
@@ -327,8 +337,17 @@ def find_sentiment(post):
         return 0
 
 
-def plot_sentiment(df, feature, title):
-    """For plotting the sentiment"""
+def plot_sentiment(df, feature, title, save_path=None):
+    """For plotting the sentiment distribution of a given feature column.
+
+    Parameters
+    ----------
+    df        : DataFrame containing *feature*
+    feature   : column name whose value_counts will be plotted
+    title     : chart title
+    save_path : optional file path; if supplied the figure is saved to disk
+                before being displayed (e.g. 'results/sentiment_dist.png').
+    """
     counts = df[feature].value_counts()
     percent = counts/sum(counts)
 
@@ -340,16 +359,21 @@ def plot_sentiment(df, feature, title):
     ax2.set_ylabel(f'Percentage : {title} sentiments', size=12)
     plt.suptitle(f"Sentiment analysis: {title}")
     plt.tight_layout()
+    if save_path:
+        plt.savefig(save_path, bbox_inches='tight', dpi=150)
     plt.show()
 
 
-def plot_sector_sentiment_trends(df, rolling_window=24):
+def plot_sector_sentiment_trends(df, rolling_window=24, save_path=None):
     """
     Cleans ticker data, maps to known sectors, and plots smoothed sentiment trends.
-    
-    Parameters:
-    - df: The wsb_sdf dataframe.
-    - rolling_window: The number of hours for the moving average (default 24h).
+
+    Parameters
+    ----------
+    df             : The wsb_sdf dataframe.
+    rolling_window : Number of hours for the moving average (default 24 h).
+    save_path      : Optional file path; if supplied the figure is saved before
+                     being displayed (e.g. 'results/sector_trends.png').
     """
     # 1. SETUP: Dark Theme & Muted Palette
     plt.style.use('dark_background')
@@ -443,6 +467,8 @@ def plot_sector_sentiment_trends(df, rolling_window=24):
 
     plt.legend(title='Market Sectors', loc='upper left', bbox_to_anchor=(1, 1), frameon=False)
     plt.tight_layout()
+    if save_path:
+        plt.savefig(save_path, bbox_inches='tight', dpi=150)
     plt.show()
 
 
@@ -503,10 +529,18 @@ def normalize_sentiment(df, sentiment_cols):
     return df
 
 
-def plot_sentiment_vs_price(df: pd.DataFrame, title: str = "Price vs. Finbert & Ensemble Sentiment"):
-    """
-    Plots Price as a line and Sentiment as a scatter plot to eliminate 
+def plot_sentiment_vs_price(df: pd.DataFrame,
+                            title: str = "Price vs. Finbert & Ensemble Sentiment",
+                            save_path: str = None):
+    """Plots Price as a line and Sentiment as a scatter plot to eliminate
     misleading lines across time gaps.
+
+    Parameters
+    ----------
+    df        : merged DataFrame with price and sentiment columns
+    title     : chart title
+    save_path : optional file path; if supplied the figure is saved before
+                being displayed (e.g. 'results/price_vs_sentiment.png').
     """
     # 1. Targeted Column Selection
     price_col = 'close' if 'close' in df.columns else ('open' if 'open' in df.columns else None)
@@ -572,4 +606,6 @@ def plot_sentiment_vs_price(df: pd.DataFrame, title: str = "Price vs. Finbert & 
                   edgecolor=grid_color, labelcolor=text_color, fontsize=11)
 
     plt.tight_layout(rect=[0, 0, 0.9, 1])
+    if save_path:
+        plt.savefig(save_path, bbox_inches='tight', dpi=150)
     plt.show()

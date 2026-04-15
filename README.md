@@ -142,7 +142,81 @@ Register a Reddit app at https://www.reddit.com/prefs/apps (choose **script** ty
 
 ## Results Snapshot
 
-Backtest charts for all six strategies across the full evaluation period are saved in `results/full/`. Segmented results by market regime (bull, bear, flat) are in their respective subdirectories.
+Backtest charts are saved under `results/<regime>/` for each of the four market regimes evaluated.  
+The naming convention is:
+
+| File pattern | Description |
+|---|---|
+| `Baseline: Buy and Hold-backtest.png` | Buy-and-hold benchmark |
+| `Baseline: Dollar Cost Averaging-backtest.png` | DCA benchmark |
+| `Baseline: Technical Analysis (EMA, BB, RSI, VWAP)-backtest.png` | TA benchmark |
+| `Strategy 1: Pure Sentiment-backtest.png` | S1 – FinBERT score only |
+| `Strategy 2: Sentiment + Technical Analysis-backtest.png` | S2 – FinBERT + EMA/RSI |
+| `Strategy 3: Inverse Sentiment (Contrarian)-backtest.png` | S3 – Contrarian |
+
+### Full Period
+
+| Buy & Hold | Dollar Cost Averaging |
+|---|---|
+| ![Full – Buy and Hold](results/full/Baseline:%20Buy%20and%20Hold-backtest.png) | ![Full – DCA](results/full/Baseline:%20Dollar%20Cost%20Averaging-backtest.png) |
+
+| Technical Analysis | Pure Sentiment |
+|---|---|
+| ![Full – TA](results/full/Baseline:%20Technical%20Analysis%20(EMA,%20BB,%20RSI,%20VWAP)-backtest.png) | ![Full – S1](results/full/Strategy%201:%20Pure%20Sentiment-backtest.png) |
+
+| Sentiment + TA | Inverse Sentiment |
+|---|---|
+| ![Full – S2](results/full/Strategy%202:%20Sentiment%20+%20Technical%20Analysis-backtest.png) | ![Full – S3](results/full/Strategy%203:%20Inverse%20Sentiment%20(Contrarian)-backtest.png) |
+
+### Bull Regime
+
+| Buy & Hold | Dollar Cost Averaging |
+|---|---|
+| ![Bull – Buy and Hold](results/bull/Baseline:%20Buy%20and%20Hold-backtest.png) | ![Bull – DCA](results/bull/Baseline:%20Dollar%20Cost%20Averaging-backtest.png) |
+
+| Technical Analysis | Pure Sentiment |
+|---|---|
+| ![Bull – TA](results/bull/Baseline:%20Technical%20Analysis%20(EMA,%20BB,%20RSI,%20VWAP)-backtest.png) | ![Bull – S1](results/bull/Strategy%201:%20Pure%20Sentiment-backtest.png) |
+
+| Sentiment + TA | Inverse Sentiment |
+|---|---|
+| ![Bull – S2](results/bull/Strategy%202:%20Sentiment%20+%20Technical%20Analysis-backtest.png) | ![Bull – S3](results/bull/Strategy%203:%20Inverse%20Sentiment%20(Contrarian)-backtest.png) |
+
+### Bear Regime
+
+| Buy & Hold | Dollar Cost Averaging |
+|---|---|
+| ![Bear – Buy and Hold](results/bear/Baseline:%20Buy%20and%20Hold-backtest.png) | ![Bear – DCA](results/bear/Baseline:%20Dollar%20Cost%20Averaging-backtest.png) |
+
+| Technical Analysis | Pure Sentiment |
+|---|---|
+| ![Bear – TA](results/bear/Baseline:%20Technical%20Analysis%20(EMA,%20BB,%20RSI,%20VWAP)-backtest.png) | ![Bear – S1](results/bear/Strategy%201:%20Pure%20Sentiment-backtest.png) |
+
+| Sentiment + TA | Inverse Sentiment |
+|---|---|
+| ![Bear – S2](results/bear/Strategy%202:%20Sentiment%20+%20Technical%20Analysis-backtest.png) | ![Bear – S3](results/bear/Strategy%203:%20Inverse%20Sentiment%20(Contrarian)-backtest.png) |
+
+### Flat/Sideways Regime
+
+| Buy & Hold | Dollar Cost Averaging |
+|---|---|
+| ![Flat – Buy and Hold](results/flat/Baseline:%20Buy%20and%20Hold-backtest.png) | ![Flat – DCA](results/flat/Baseline:%20Dollar%20Cost%20Averaging-backtest.png) |
+
+| Technical Analysis | Pure Sentiment |
+|---|---|
+| ![Flat – TA](results/flat/Baseline:%20Technical%20Analysis%20(EMA,%20BB,%20RSI,%20VWAP)-backtest.png) | ![Flat – S1](results/flat/Strategy%201:%20Pure%20Sentiment-backtest.png) |
+
+| Sentiment + TA | Inverse Sentiment |
+|---|---|
+| ![Flat – S2](results/flat/Strategy%202:%20Sentiment%20+%20Technical%20Analysis-backtest.png) | ![Flat – S3](results/flat/Strategy%203:%20Inverse%20Sentiment%20(Contrarian)-backtest.png) |
+
+> **Generating figures yourself**: run `main.ipynb` end-to-end.  The notebooks call
+> `run_and_plot(..., results_dir='results/full')` and
+> `run_strategy(..., results_dir='results/full')` from `utils/_strategy.py`, and
+> `plot_sentiment(df, ..., save_path='results/sentiment_dist.png')` /
+> `plot_sector_sentiment_trends(df, save_path='results/sector_trends.png')` /
+> `plot_sentiment_vs_price(df, save_path='results/price_vs_sentiment.png')` from
+> `utils/_processing.py`.
 
 ---
 

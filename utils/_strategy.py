@@ -73,7 +73,18 @@ class ActiveTechAnalysis(bt.Strategy):
                 self.close()
 
 
-def run_and_plot(strategy_class, data, name, **kwargs):
+def run_and_plot(strategy_class, data, name, results_dir='results', **kwargs):
+    """Run a baseline strategy and save the backtest chart.
+
+    Parameters
+    ----------
+    strategy_class : Backtrader Strategy class
+    data           : Backtrader data feed
+    name           : Human-readable strategy name used in the chart title and
+                     output filename.
+    results_dir    : Directory where the PNG will be saved (default: 'results').
+    **kwargs       : Additional parameters forwarded to the Strategy.
+    """
     print(f"--- Running: {name} ---")
     cerebro = bt.Cerebro()
     cerebro.adddata(data)
@@ -134,7 +145,7 @@ def run_and_plot(strategy_class, data, name, **kwargs):
             ax.yaxis.label.set_color('white')
             ax.title.set_color('white')
 
-        fig.savefig(f'results/Baseline: {name}-backtest.png')
+        fig.savefig(f'{results_dir}/Baseline: {name}-backtest.png')
 
 
 class SentimentPandasData(bt.feeds.PandasData):
@@ -192,7 +203,18 @@ class InverseSentimentStrategy(bt.Strategy):
                 self.close()
 
 
-def run_strategy(strategy_class, dataframe, name, **kwargs):
+def run_strategy(strategy_class, dataframe, name, results_dir='results', **kwargs):
+    """Run a sentiment strategy and save the backtest chart.
+
+    Parameters
+    ----------
+    strategy_class : Backtrader Strategy class
+    dataframe      : pandas DataFrame with price and sentiment columns
+    name           : Human-readable strategy name used in the chart title and
+                     output filename.
+    results_dir    : Directory where the PNG will be saved (default: 'results').
+    **kwargs       : Additional parameters forwarded to the Strategy.
+    """
     print(f"\n{'='*10} {name} {'='*10}")
 
     cerebro = bt.Cerebro()
@@ -244,4 +266,4 @@ def run_strategy(strategy_class, dataframe, name, **kwargs):
         fig = figures[0][0]
         fig.set_size_inches(18, 10)
 
-        fig.savefig(f'results/{name}-backtest.png')
+        fig.savefig(f'{results_dir}/{name}-backtest.png')
