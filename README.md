@@ -42,11 +42,11 @@ wallstreetbets-sentiment-trading-strategy/
 │   └── strategy.py                 # Backtrader strategy classes + runner helpers
 │
 ├── data/
-│   ├── full_manual_spy.csv         # Cleaned, merged SPY price data
-│   ├── manual_merged_df.csv        # Merged sentiment + price data
-│   ├── manual_spy_df.csv           # Processed SPY price data
-│   ├── reddit/                     # Raw daily WSB comment CSVs  (gitignored)
-│   └── spy/                        # Raw intraday SPY CSVs       (gitignored)
+│   ├── full_manual_spy.csv         # ✅ committed – merged SPY price data
+│   ├── manual_merged_df.csv        # ✅ committed – merged sentiment + price data
+│   ├── manual_spy_df.csv           # ✅ committed – processed SPY price data
+│   ├── reddit/                     # raw daily WSB comment CSVs  (gitignored – re-scrape if needed)
+│   └── spy/                        # raw intraday SPY CSVs       (gitignored – re-fetch if needed)
 │
 ├── results/
 │   ├── bear/                       # Backtest charts – bear market regime
@@ -117,23 +117,28 @@ python -m spacy download en_core_web_lg
 > **Apple Silicon / CUDA users:** Install the appropriate PyTorch wheel first:
 > https://pytorch.org/get-started/locally/
 
-### 4. Configure Reddit API credentials
+### 4. Configure Reddit API credentials *(optional – only needed to re-scrape data)*
 
 ```bash
 cp .env.example .env
 # Edit .env with your CLIENT_ID, CLIENT_SECRET, and DEV_NAME
 ```
 
-Register a Reddit app at https://www.reddit.com/prefs/apps (choose **script** type).
+Register a Reddit app at https://www.reddit.com/prefs/apps (choose **script** type).  
+Skip this step if you are using the pre-collected data already committed to `data/`.
 
 ### 5. Run the notebooks
 
-| Notebook | Purpose |
-|----------|---------|
-| `notebooks/01_reddit_data.ipynb` | Scrape and preprocess r/WSB comments |
-| `notebooks/02_intraday_spy_data.ipynb` | Fetch SPY intraday OHLCV data |
-| `notebooks/03_main.ipynb` | Run the full analysis pipeline and backtests |
-| `notebooks/04_algo.ipynb` | Experimental algorithmic trading sandbox |
+| Notebook | Purpose | Required? |
+|----------|---------|:---------:|
+| `notebooks/01_reddit_data.ipynb` | Re-scrape r/WSB comments via PRAW | Optional |
+| `notebooks/02_intraday_spy_data.ipynb` | Re-fetch SPY intraday OHLCV via yfinance | Optional |
+| `notebooks/03_main.ipynb` | Full analysis pipeline and backtests | **Yes** |
+| `notebooks/04_algo.ipynb` | Experimental algorithmic trading sandbox | Optional |
+
+> **TL;DR:** Processed data (`full_manual_spy.csv`, `manual_merged_df.csv`, `manual_spy_df.csv`) is already
+> committed to `data/`. You can jump straight to **`notebooks/03_main.ipynb`** without running
+> the data-collection notebooks or configuring any API credentials.
 
 ---
 
